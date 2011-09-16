@@ -1,0 +1,68 @@
+@model BigApp.Models.ProjectNewViewModel
+
+@* This partial view defines form fields that will appear when creating and editing entities *@
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.Project.Name)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Project.Name)
+    @Html.ValidationMessageFor(model => model.Project.Name)
+</div>
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.Project.Url)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Project.Url)
+    @Html.ValidationMessageFor(model => model.Project.Url)
+</div>
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.Project.CreatedOn)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Project.CreatedOn)
+    @Html.ValidationMessageFor(model => model.Project.CreatedOn)
+</div>
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.Project.UpdatedOn)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Project.UpdatedOn)
+    @Html.ValidationMessageFor(model => model.Project.UpdatedOn)
+</div>
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.Project.isFeatured)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Project.isFeatured)
+    @Html.ValidationMessageFor(model => model.Project.isFeatured)
+</div>
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.Project.isDisabled)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Project.isDisabled)
+    @Html.ValidationMessageFor(model => model.Project.isDisabled)
+</div>
+
+<div class="editor-label">
+    Group
+</div>
+<div class="editor-field">
+    @Html.DropDownListFor(model => model.Project.GroupId, ((IEnumerable<BigApp.Domain.Entities.Group>)Model.Groups).Select(option => new SelectListItem {
+        Text = (option == null ? "None" : option.Name), 
+        Value = option.GroupId.ToString(),
+        Selected = (Model != null) && (option.GroupId == Model.Project.GroupId)
+    }), "Choose...")
+    @Html.ValidationMessageFor(model => model.Project.GroupId)
+</div>
+
+
+@Html.ListBoxFor(model=>model.Tags, (Model.Tags).Select(o=>new SelectListItem{ 
+    Text = (o == null ? "None"  : o.Name),
+    Value = o.TagId.ToString()}))
