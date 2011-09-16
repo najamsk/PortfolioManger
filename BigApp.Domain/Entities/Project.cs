@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data.Services.Common;
+using System.ComponentModel.DataAnnotations;
 
 namespace BigApp.Domain.Entities
 {
@@ -11,6 +12,7 @@ namespace BigApp.Domain.Entities
     public class Project
     {
         public int ProjectId { get; set; }
+        [Required(ErrorMessage="please enter name")]
         public string Name { get; set; }
         public string Url { get; set; }
         public DateTime CreatedOn { get; set; }
