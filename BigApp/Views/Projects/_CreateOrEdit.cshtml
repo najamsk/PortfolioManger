@@ -62,7 +62,12 @@
     @Html.ValidationMessageFor(model => model.Project.GroupId)
 </div>
 
-
+<div class="editor-label">
+    Tags
+</div>
+<div class="editor-field">
 @Html.ListBoxFor(model=>model.Tags, (Model.Tags).Select(o=>new SelectListItem{ 
     Text = (o == null ? "None"  : o.Name),
     Value = o.TagId.ToString()}))
+
+</div>

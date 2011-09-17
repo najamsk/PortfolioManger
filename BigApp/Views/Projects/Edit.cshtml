@@ -1,4 +1,4 @@
-@model BigApp.Domain.Entities.Project
+@model BigApp.Models.ProjectNewViewModel
 
 @{
     ViewBag.Title = "Edit";
@@ -11,7 +11,7 @@
     <fieldset>
         <legend>Project</legend>
 
-        @Html.HiddenFor(model => model.ProjectId)
+        @Html.HiddenFor(model => model.Project.ProjectId)
 		@Html.Partial("_CreateOrEdit", Model)
 
         <p>

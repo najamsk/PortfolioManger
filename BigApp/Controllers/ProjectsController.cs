@@ -78,17 +78,24 @@ namespace BigApp.Controllers
         public ActionResult Edit(int id)
         {
 			ViewBag.PossibleGroups = groupRepository.All;
-             return View(projectRepository.Find(id));
+
+            ProjectNewViewModel newModel = new ProjectNewViewModel
+            {
+                Project = projectRepository.Find(id),
+                Groups = groupRepository.All,
+                Tags = tagRepository.All,
+            };
+            return View(newModel);
         }
 
         //
         // POST: /Projects/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(Project project)
+        public ActionResult Edit(ProjectNewViewModel ProjectVM)
         {
             if (ModelState.IsValid) {
-                projectRepository.InsertOrUpdate(project);
+                projectRepository.InsertOrUpdate(ProjectVM.Project);
                 projectRepository.Save();
                 return RedirectToAction("Index");
             } else {

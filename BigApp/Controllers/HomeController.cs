@@ -16,13 +16,13 @@ namespace BigApp.Controllers
         public ActionResult Index()
         {
             ViewBag.Message = "Welcome to ASP.NET MVC! by najam sikander awan";
-            using (var context = new BigAppContext())
-            {
-                using (var writer = new XmlTextWriter(@"d:/MyModel.edmx", Encoding.Default))
-                {
-                    EdmxWriter.WriteEdmx(context, writer);
-                }
-            }
+            //using (var context = new BigAppContext())
+            //{
+            //    using (var writer = new XmlTextWriter(@"d:/MyModel.edmx", Encoding.Default))
+            //    {
+            //        EdmxWriter.WriteEdmx(context, writer);
+            //    }
+            //}
             return View();
         }
 

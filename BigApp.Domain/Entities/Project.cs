@@ -23,6 +23,7 @@ namespace BigApp.Domain.Entities
 
         public virtual Group Group { get; set; }
 
+        [Required(ErrorMessage="Please select atleast one tag")]
         public virtual ICollection<Tag> Tags { get; set; }
     }
 }
