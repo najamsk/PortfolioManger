@@ -21,7 +21,12 @@ namespace BigApp.Binders
             //use Project.Name even if your makrup dont have Project prefix
             model.Project = new Project();
             //populate the fields of the model
-            model.Project.ProjectId = int.Parse(GetValue(bindingContext, searchPrefix, "Project.ProjectId"));
+            if (GetValue(bindingContext, searchPrefix, "Project.ProjectId") !=  null)
+            {
+                model.Project.ProjectId = int.Parse(GetValue(bindingContext, searchPrefix, "Project.ProjectId"));
+            }
+            
+            //
             model.Project.Name = GetValue(bindingContext, searchPrefix, "Project.Name");
             model.Project.Url = GetValue(bindingContext, searchPrefix, "Project.Url");
             model.Project.CreatedOn  =  DateTime.Now;
@@ -31,7 +36,7 @@ namespace BigApp.Binders
             model.Project.GroupId = int.Parse(GetValue(bindingContext, searchPrefix, "Project.GroupId"));
             model.Project.Tags = new List<Tag>();
 
-            foreach (var tagid in GetValue(bindingContext, searchPrefix, "Tags").Split(','))
+            foreach (var tagid in GetValue(bindingContext, searchPrefix, "Project.Tags").Split(','))
             {
                 var tag = new Tag { TagId = int.Parse(tagid)};
                 model.Project.Tags.Add(tag);

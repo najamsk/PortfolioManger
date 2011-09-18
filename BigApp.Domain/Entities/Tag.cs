@@ -15,5 +15,10 @@ namespace BigApp.Domain.Entities
         public DateTime CreatedOn { get; set; }
         public DateTime UpdatedOn { get; set; }
         public virtual ICollection<Project> Projects { get; set; }
+
+        public override string ToString()
+        {
+            return TagId.ToString();
+        }
     }
 }
