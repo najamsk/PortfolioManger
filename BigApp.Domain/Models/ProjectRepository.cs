@@ -8,6 +8,7 @@ using System.Web;
 using BigApp.Domain.Entities;
 
 using BigApp.Domain.Abstract;
+using System.Data.Objects;
 
 namespace BigApp.Domain.Concrete
 { 
@@ -43,9 +44,50 @@ namespace BigApp.Domain.Concrete
                     context.Entry(tag).State = EntityState.Unchanged;
                 }
                 context.Projects.Add(project);
-            } else {
-                // Existing entity
-                context.Entry(project).State = EntityState.Modified;
+            } else {             
+                //project.Tags.Clear();
+                //context.Entry(project).State = EntityState.Modified;
+                //Save();           
+                //context.Entry(project).State = EntityState.Modified;
+                // Reload project with all tags from DB
+                //var projectInDb = context.Projects.Include(p => p.Tags)
+                //    .Single(p => p.ProjectId == project.ProjectId);
+
+                //projectInDb.Tags.Clear();
+
+                //foreach (var tag in project.Tags)
+                //{
+                //    context.Tags.Attach(tag);
+                //    projectInDb.Tags.Add(tag);
+                   
+                //}
+
+
+
+                // Reload project with all tags from DB
+                var projectInDb = context.Projects.Include(p => p.Tags)
+                    .Single(p => p.ProjectId == project.ProjectId);
+
+                // Update scalar properties of the project
+                context.Entry(projectInDb).CurrentValues.SetValues(project);
+
+                // Check if tags have been removed, if yes: remove from loaded project tags
+                foreach (var tagInDb in projectInDb.Tags.ToList())
+                {
+                    if (!project.Tags.Any(t => t.TagId == tagInDb.TagId))
+                        projectInDb.Tags.Remove(tagInDb);
+                }
+
+                // Check if tags have been added, if yes: add to loaded project tags
+                foreach (var tag in project.Tags)
+                {
+                    if (!projectInDb.Tags.Any(t => t.TagId == tag.TagId))
+                    {
+                        context.Tags.Attach(tag);
+                        projectInDb.Tags.Add(tag);
+                    }
+                }
+
             }
         }
 

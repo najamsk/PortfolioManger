@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using BigApp.Domain.Entities;
 using BigApp.Models;
 using BigApp.Domain.Abstract;
+using System.Data;
 
 namespace BigApp.Controllers
 {   
@@ -92,8 +93,27 @@ namespace BigApp.Controllers
         // POST: /Projects/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(ProjectNewViewModel ProjectVM)
+        [ActionName("Edit")]
+        public ActionResult EditProject( ProjectNewViewModel ProjectVM)
         {
+            //load project from repo
+            //call tryupdatemodel on the Project
+
+            //int pID = int.Parse(collection["Project.ProjectId"]);
+            //var pvm = new ProjectNewViewModel();
+            ////pvm.Project = projectRepository.Find(pID);
+            //try{
+            //    if(TryUpdateModel(pvm))
+            //    {
+            //        UpdateModel(pvm);
+            //    }
+            //}
+            //catch(DataException){
+            //    ModelState.AddModelError("", "unable to update project");
+            //    return View();
+            //}
+            
+
             if (ModelState.IsValid) {
                 projectRepository.InsertOrUpdate(ProjectVM.Project);
                 projectRepository.Save();

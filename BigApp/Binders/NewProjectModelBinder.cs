@@ -19,7 +19,8 @@ namespace BigApp.Binders
 
             //since viewmodel contains custom types like project make sure project is not null and to pass key arround for value providers
             //use Project.Name even if your makrup dont have Project prefix
-            model.Project = new Project();
+            
+            model.Project  = model.Project ?? new Project();
             //populate the fields of the model
             if (GetValue(bindingContext, searchPrefix, "Project.ProjectId") !=  null)
             {
@@ -35,14 +36,16 @@ namespace BigApp.Binders
             model.Project.isFeatured = GetCheckedValue(bindingContext, searchPrefix, "Project.isFeatured");
             model.Project.GroupId = int.Parse(GetValue(bindingContext, searchPrefix, "Project.GroupId"));
             model.Project.Tags = new List<Tag>();
-
-            foreach (var tagid in GetValue(bindingContext, searchPrefix, "Project.Tags").Split(','))
+            if (GetValue(bindingContext, searchPrefix, "Project.Tags") != null)
             {
-                var tag = new Tag { TagId = int.Parse(tagid)};
-                model.Project.Tags.Add(tag);
+                foreach (var tagid in GetValue(bindingContext, searchPrefix, "Project.Tags").Split(','))
+                {
+                    var tag = new Tag { TagId = int.Parse(tagid) };
+                    model.Project.Tags.Add(tag);
+                }
             }
 
-            var total = model.Project.Tags.Count;
+            //var total = model.Project.Tags.Count;
             
             return model;
         }
